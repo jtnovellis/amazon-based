@@ -19,7 +19,6 @@ function Product({
     Array.from({ length: Math.round(rating.rate) }, (_, i) => i + 1)
   );
   const [hasPrime, _prime] = useState(Math.random() < 0.5);
-  const [render, setRender] = useState(false);
 
   const currency = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -29,12 +28,6 @@ function Product({
   const stars = amountStars.map((star) => (
     <StarIcon className='h-5 text-yellow-500' key={`start-${star}`} />
   ));
-
-  useEffect(() => {
-    setRender(true);
-  }, []);
-
-  if (!render) return null;
 
   return (
     <div className='relative flex flex-col m-5 bg-white z-30 p-10'>
