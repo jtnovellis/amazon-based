@@ -4,8 +4,14 @@ import {
   ShoppingCartIcon,
   Bars3Icon,
 } from '@heroicons/react/24/outline';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 function Header() {
+  const { data } = useSession();
+  function handleSign() {
+    signIn();
+  }
+
   return (
     <header>
       <div className='flex items-center bg-amazon_blue px-6 flex-grow py-2 gap-6'>
@@ -26,7 +32,7 @@ function Header() {
           <MagnifyingGlassIcon className='h-12 p-4' />
         </div>
         <div className='text-white flex items-center text-xs space-x-6 whitespace-nowrap'>
-          <div className='link'>
+          <div onClick={handleSign} className='link'>
             <p>Hello, Jairo Jair</p>
             <p className='font-extrabold md:text-sm'>Account & Lists</p>
           </div>
