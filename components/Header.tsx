@@ -5,8 +5,13 @@ import {
   Bars3Icon,
 } from '@heroicons/react/24/outline';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { useAppSelector } from '@/hooks/redux';
+import { selectItems } from '@/slices/cartSlice';
 
 function Header() {
+  const itemsAmount = useAppSelector(selectItems).length;
+  const router = useRouter();
   const { data } = useSession();
 
   function handleSign() {
@@ -16,7 +21,10 @@ function Header() {
   return (
     <header>
       <div className='flex items-center bg-amazon_blue px-6 flex-grow py-2 gap-6'>
-        <div className='mt-2 flex flex-grow items-center sm:flex-grow-0'>
+        <div
+          onClick={() => router.push('/')}
+          className='mt-2 flex flex-grow items-center sm:flex-grow-0'
+        >
           <Image
             src='https://links.papareact.com/f90'
             alt='logo image'
@@ -43,9 +51,12 @@ function Header() {
             <p>Returns</p>
             <p className='font-extrabold md:text-sm'>& Orders</p>
           </div>
-          <div className='relative link flex items-center'>
+          <div
+            onClick={() => router.push('/checkout')}
+            className='relative link flex items-center'
+          >
             <span className='absolute top-0 right-0 md:right-10 h-4 w-4 bg-yellow-400 rounded-full text-center text-black font-bold'>
-              0
+              {itemsAmount}
             </span>
             <ShoppingCartIcon className='h-10' />
             <p className='hidden md:inline font-extrabold md:text-sm mt-2'>

@@ -1,8 +1,10 @@
 import { Products } from '@/types';
 import Image from 'next/image';
 import { StarIcon } from '@heroicons/react/24/solid';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from './common/Button';
+import { useAppDispatch } from '@/hooks/redux';
+import { addToCart } from '@/slices/cartSlice';
 
 interface ProductProps extends Products {}
 
@@ -15,6 +17,7 @@ function Product({
   image,
   rating,
 }: ProductProps) {
+  const dispatch = useAppDispatch();
   const [amountStars, _stars] = useState(
     Array.from({ length: Math.round(rating.rate) }, (_, i) => i + 1)
   );
@@ -28,6 +31,20 @@ function Product({
   const stars = amountStars.map((star) => (
     <StarIcon className='h-5 text-yellow-500' key={`start-${star}`} />
   ));
+
+  function handleClick() {
+    const product = {
+      id,
+      title,
+      price,
+      description,
+      category,
+      image,
+      rating,
+      hasPrime,
+    };
+    dispatch(addToCart(product));
+  }
 
   return (
     <div className='relative flex flex-col m-5 bg-white z-30 p-10'>
@@ -57,7 +74,9 @@ function Product({
           <p className='text-xs text-gray-500'>FREE Next-day Delivery</p>
         </div>
       )}
-      <Button className='mt-auto'>Add to Basket</Button>
+      <Button onClick={handleClick} className='mt-auto'>
+        Add to Basket
+      </Button>
     </div>
   );
 }
