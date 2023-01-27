@@ -8,8 +8,9 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 
 function Header() {
   const { data } = useSession();
+
   function handleSign() {
-    signIn();
+    data ? signOut() : signIn();
   }
 
   return (
@@ -33,7 +34,9 @@ function Header() {
         </div>
         <div className='text-white flex items-center text-xs space-x-6 whitespace-nowrap'>
           <div onClick={handleSign} className='link'>
-            <p>Hello, Jairo Jair</p>
+            <p className='hover:unerline'>
+              {data ? `Hello, ${data.user?.name}` : 'Sign In'}
+            </p>
             <p className='font-extrabold md:text-sm'>Account & Lists</p>
           </div>
           <div className='link'>
