@@ -4,9 +4,11 @@ import { useAppSelector } from '@/hooks/redux';
 import { selectItems } from '@/slices/cartSlice';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 function Checkout() {
   const items = useAppSelector(selectItems);
+  const router = useRouter();
   const { data } = useSession();
 
   const totalPrice = items.map((item) => item.price).reduce((a, b) => a + b, 0);
@@ -47,7 +49,11 @@ function Checkout() {
               <span className='font-bold'>{currency}</span>
             </h2>
 
-            <Button className='mt-3' disabled={!data}>
+            <Button
+              onClick={() => router.push('/checkout/payment')}
+              className='mt-3'
+              disabled={!data}
+            >
               {!data ? 'Sign In to Checkout' : 'Checkout'}
             </Button>
           </>

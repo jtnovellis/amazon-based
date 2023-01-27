@@ -56,8 +56,7 @@ function Product({
         height={200}
         width={200}
         alt={title}
-        objectFit='contain'
-        className='self-center'
+        className='self-center object-contain'
       />
       <h4 className='my-3'>{title}</h4>
       <div className='flex'>{stars}</div>
